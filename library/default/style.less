@@ -1,0 +1,28 @@
+// main: style.less, out: ../style.css, compress: false, sourceMap: false
+
+/* Load Customizations */
+@import "config";
+@import "loop";
+
+
+@{namespace-container}, #tinymce.wp-editor {
+
+    // Load Customizations
+    @import "bullet-list";
+    @import "elements";
+
+//<QI>
+    .add-size(1, ~".bsp-container", padding, @dropdown-element-growth, 0);
+    .add-size(1, ~".bsp-padding", padding, @dropdown-element-growth);
+    .add-size(1, ~".bsp-padding-top", padding-top, @dropdown-element-growth);
+    .add-size(1, ~".bsp-padding-bottom", padding-bottom, @dropdown-element-growth);
+    .add-size(1, ~".bsp-padding-left", padding-left, @dropdown-element-growth);
+    .add-size(1, ~".bsp-padding-right", padding-right, @dropdown-element-growth);
+    .add-size(1, ~".bsp-margin", margin, @dropdown-element-growth);
+    .add-size(1, ~".bsp-margin-top", margin-top, @dropdown-element-growth);
+    .add-size(1, ~".bsp-margin-bottom", margin-bottom, @dropdown-element-growth);
+    .add-size(1, ~".bsp-margin-left", margin-left, @dropdown-element-growth);
+    .add-size(1, ~".bsp-margin-right", margin-right, @dropdown-element-growth);
+    .add-font-size(1, ~".bsp-font-size", font-size, @dropdown-font-growth, @dropdown-font-start-size);
+//</QI>   
+}

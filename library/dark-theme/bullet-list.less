@@ -1,0 +1,39 @@
+// main: style.less
+    ol {
+        list-style-type: none; 
+        counter-reset: li-counter;
+        li {
+          background-color: #666;
+          padding: 10px;
+          padding-left:20px;
+          position: relative;
+          margin-bottom:15px;
+          border: 1px solid #888;
+        }
+        > li:before {
+          font-size: @dropdown-order-list-font-size;
+          & when (@bool-ordered-list-period = true) { 
+          content: counter(li-counter)".";
+          }
+          & when (@bool-ordered-list-period = false) { 
+          content: counter(li-counter);
+          }   
+          text-align: center;
+          counter-increment: li-counter;
+          position: relative;
+          color: @color-order-list-theme-color;
+          background: @color-order-list-theme-bg-color;
+          & when (@dropdown-ordered-list-type = ~"clean") { 
+              left: -10px;
+              top: 0px;
+              background:none;
+          }
+          & when (@dropdown-ordered-list-type = ~"clean-boxed") { // hiddens
+              left: -20px;
+          }
+          & when (@dropdown-ordered-list-type = ~"clean-sphere") { // hiddens
+              border-radius: 120px;
+              left: -20px;
+          }
+       }        
+    }

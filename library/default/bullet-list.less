@@ -1,0 +1,39 @@
+// main: style.less
+    ol {
+        list-style-type: none; 
+        counter-reset: li-counter;
+        li {
+          padding: 20px 10px 40px 80px;
+          position: relative;
+          min-height:120px;
+          margin-bottom:40px;
+        }
+        > li:before {
+          font-size: @dropdown-order-list-font-size;
+          & when (@bool-ordered-list-period = true) { 
+          content: counter(li-counter)".";
+          }
+          & when (@bool-ordered-list-period = false) { 
+          content: counter(li-counter);
+          }   
+          width: 80px;
+          text-align: center;
+          height: 80px;
+          counter-increment: li-counter;
+          position: absolute;
+          color: @color-order-list-theme-color;
+          background: @color-order-list-theme-bg-color;
+          & when (@dropdown-ordered-list-type = ~"clean") { 
+              left: 0px;
+              top: 0px;
+              background:none;
+          }
+          & when (@dropdown-ordered-list-type = ~"clean-boxed") { // hiddens
+              left: -20px;
+          }
+          & when (@dropdown-ordered-list-type = ~"clean-sphere") { // hiddens
+              border-radius: 120px;
+              left: -20px;
+          }
+       }        
+    }

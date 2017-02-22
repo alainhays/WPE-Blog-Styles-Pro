@@ -1,0 +1,16 @@
+// main: style.less
+// Create 5 variant of any sizes
+.add-size(@i:1, @name, @prop, @sizing, @secondOption:~'') when (@i =< @dropdown-element-count) {
+  @{name}-@{i} {
+    @{prop} : @i * @sizing @secondOption;
+  }
+  .add-size(@i + 1, @name,  @prop, @sizing, @secondOption);
+}
+
+// Create font-sizes
+.add-font-size(@i:1, @name, @prop, @sizing, @default) when (@i =< @dropdown-font-count) {
+  @{name}-@{i} {
+    @{prop}: @default + (@i * @sizing);
+    }
+  .add-font-size(@i + 1, @name,  @prop, @sizing, @default);
+}

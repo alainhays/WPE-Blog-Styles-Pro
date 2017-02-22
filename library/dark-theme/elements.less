@@ -1,0 +1,45 @@
+// main: style.less
+
+body {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: 'Raleway', Arial, sans-serif;
+    text-rendering: optimizeLegibility;
+}
+img{
+    max-width: 880px;
+}
+.content blockquote {
+    font-style: italic;
+    font-size: 1.65em;
+    font-family: 'Lora', serif;
+    line-height: 1.4;
+    color: @color-element-font-color;
+    &::before {
+        content: '\\\\\\\\201C';
+    }
+    &::after {
+        content: '\\\\\\\\201D';
+    }
+}
+
+.bsp-highlight-box {
+        background: @color-element-primary none repeat scroll 0% 0%;
+        padding: 30px;
+        min-width: 150px;
+        color: @color-element-font-color;
+        text-align: center;
+        border: 1px solid @color-element-secondary;
+        margin-bottom: 10px;
+        font-size: 30px;	
+    }
+    
+.bsp-image-list{
+    padding-left: 0px;
+    list-style: none;
+    display: flex;
+    li{
+        padding:10px;
+    }
+}

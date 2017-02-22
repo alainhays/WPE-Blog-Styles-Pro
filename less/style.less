@@ -1,0 +1,380 @@
+// main: style.less, out: ../style.css, compress: false, sourceMap: false
+
+
+/* editor specifics */
+.ace_print-margin {
+    position: relative;
+    display: none;
+}
+
+#bsp-admin-content{
+    overflow-x:hidden;
+    width:100%;
+}
+
+#bsp-loading-container{
+    position:fixed;
+    top:0px;
+    bottom: 0px;
+    left:0px;
+    right:0px;
+    background:#fff;
+    z-index:9;
+    #bsp-loader-icon{
+        color:#BBB;
+        font-size:40px;
+        position:absolute;
+        top:calc(~"50vh - 20px");
+        left:calc(~"50vw - 20px");
+    }
+}
+#adminmenuback{
+    z-index:10;
+}
+
+/* BSP Easy */
+#bsp-easy-container {
+    padding:20px 20px 20px 20px;
+    display:flex;
+    height:300px;
+    position:absolute;
+     width:100%;
+     width:calc(~'100% - 40px');
+     .col-100{
+        flex-basis:200px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        label{
+            width:100%;
+        }
+        #easy-folder-selector {
+            flex-basis:200px;
+            width: 200px;
+        }
+    }
+}
+
+/* BSP theme Selector */
+.list-folder-selector{
+    flex-basis: 150px;
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    .select-part{
+        flex-grow:1;
+        height: 30px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        position: relative;
+    }
+    .creator-part{
+        flex-basis:30px;
+        height: 30px;
+        background:#333;
+        border: 1px solid #ccc;
+        cursor: pointer;
+        position: relative;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        cursor:pointer;
+        color:#fff;
+        &:hover{
+            background:#666;
+        }
+    }
+}
+
+/* Advanced editor */
+#bsp-advanced-container {
+    padding:0px 20px 20px 20px;
+    display:flex;
+    position:absolute;
+    height:300px;
+    width:calc(~'100% - 40px');
+    #wpe-bsp-main{
+        flex-grow:1;
+        #tab-container {
+            width:100%;
+            height:60px;
+            display:flex;
+            overflow:hidden;
+            .tab-item {
+                position:relative;
+                flex-basis: 150px;
+                height:auto;
+                padding:10px;
+                background:#eee;
+                border:1px solid #ccc;
+                border-top: 5px solid #BBB;
+                cursor:pointer;
+                margin-right:2px;
+                &.tab-active {
+                background:#FFF;
+                border:1px solid #FFF; 
+                border-top: 5px solid #06F; 
+                .folder-name{
+                    color:#F50;
+                    padding:0px;
+                }
+                }
+                .tab-close{
+                    position: absolute;
+                    right:0px;
+                    top:0px;
+                    padding:8px;
+                    color:#BBB;
+                    &:hover{
+                        color:#000;
+                    }
+                }
+            }
+        }
+        #BSP-main-editor {
+            height:calc(~"100vh - 400px");
+            border: 1px solid #111;
+            font-size:16px;
+            font-weight:400;
+        }
+
+    }
+
+    #list-container {
+        flex-basis:180px;
+        top:0px;
+        height:40px;
+        display:flex;
+        flex-direction: column;
+        padding: 40px 0px 0px 0px;
+        .list-item{
+            flex-basis: 150px;
+            height:20px;
+            padding: 10px 10px 10px 40px;
+            background:#eee;
+            border:1px solid #ccc;
+            cursor:pointer;
+            position:relative;
+            i {
+                display:block;
+                background-image: url("images/less-icon.png");
+                height:32px;
+                width:32px;
+                background-size:32px 32px;
+                background-position: center;
+                position:absolute;
+                top:3px;
+                left:3px;
+            }
+        }
+    }
+}
+#top-actions-bar{
+    display:flex;
+    flex-direction:row-reverse;
+    padding: 5px 5px 5px 5px;
+    background: #fff;
+    margin-left: -20px;
+    margin-bottom: 20px;
+    border-bottom:1px solid #CCC;
+    .flex-padding{
+        flex-grow:2;
+    }
+    .btn-elem{
+        padding:15px 25px;
+        margin:5px;
+        text-align:center;
+        flex-basis:150px; 
+        cursor:pointer;
+        &#save-active-file{
+            background:#090;
+            color:#fff;
+            &:hover{
+                background:#0B0;
+                color:#fff;
+            }
+        }
+         &#bsp-easy-mode{
+            background:#059;
+            color:#fff;
+            &:hover{
+                background:#08B;
+                color:#fff;
+            }
+            &.active{
+               color:#059;
+               background:#fff;
+               box-shadow:inset 2px 2px 15px rgba(0,0,0, .1);
+               cursor:default;
+            }
+        }
+        &#bsp-advanced-mode{
+            background:#209;
+            color:#fff;
+            &:hover{
+                background:#40B;
+                color:#fff;
+            }
+            &.active{
+               color:#209;
+               background:#fff;
+               box-shadow:inset 2px 2px 15px rgba(0,0,0, .1);
+               cursor:default;
+            }
+        }
+    }
+}
+
+
+
+
+/* Popup Styles */
+.bsp-popup-cover{
+    position:fixed;
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    top:0px;
+    bottom: 0px;
+    left:0px;
+    right:0px;
+    background:rgba(0,0,0,.3);
+    z-index:1000;
+    overflow:hidden;
+    .bsp-popup-main{
+        position:relative;
+        background:#fff;
+        box-shadow: 2px 2px 10px rgba(0,0,0,.4);
+        height:auto;
+        flex-basis:300px;
+        &.ext{
+            flex-basis:600px;   
+        }
+        display:flex;
+        flex-direction: column;
+        .bsp-popup-title-bar{
+            display: flex;
+            background:#f6f6f6;
+            height: 40px;
+            flex-direction: row;
+            justify-content: center;
+            align-content:stretch;
+            align-items:center;
+            flex-wrap: nowrap;
+            .bsp-popup-title{
+                display: flex;
+                flex-grow: 5;
+                height:40px;
+                justify-content: center;
+                align-content:stretch;
+                align-items:center;
+            }
+            .bsp-popup-close{
+                flex-grow: 1;
+                display: flex;
+                height:40px;
+                cursor:pointer;
+                i, b{
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 40px;
+                }
+                b{
+                    font-size: 20px;
+                }
+                &:hover{
+                    background:#f1f1f1;
+                    color:#666;
+                }
+            }
+        }
+        .pop-btn-bar{
+            display: flex;
+            background:#f6f6f6;
+            height: 40px;
+            padding:20px;
+            flex-direction: row;
+            justify-content: center;
+            align-content:stretch;
+            align-items: flex-end;
+            flex-wrap: nowrap;
+            .pop-btn {
+                border:none;
+                height:30px;
+                flex-basis:100px;
+                &.bsp-popup-cancel{
+                    color:#666;
+                    background:#EEE;
+                    &:hover{
+                        background:#FFF;
+                    }
+                }
+                &.bsp-popup-confirm{
+                    color:#fff;
+                    background:#0B0;
+                    &:hover{
+                        background:#0C0;
+                    }
+                }
+            }
+        }
+        .bsp-popup-body{
+            display: flex;
+            padding:20px;
+            flex-direction: column;
+            justify-content: center;
+            align-content:stretch;
+            align-items: center;
+            flex-wrap: nowrap;
+            .bsp-popup-label{
+                width: 70%;
+            }
+            #bsp-select-desc{
+                padding:20px;
+                position:absolute;
+                top:100%;
+                left:0px;
+                right:0px;
+                background:#06C;
+                color:#fff;
+                box-shadow: 2px 2px 10px rgba(0,0,0,.4);
+            }
+            .select2-container--default{
+                width:100% !important;
+                min-width:300px;
+            }
+        }
+    }
+}
+
+/* POST - Page insert section */
+.select2-container, #wpe-bsp-select-classes, {
+    width:100% !important;
+}
+.select2-selection__rendered .select2-selection__choice {
+    background-color: #f1f1f1;
+    border: 0px !important;
+    border-radius: 0px !important;
+    cursor: default;
+    float: left;
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 5px 10px !important;
+    margin-bottom: 0px;
+}
+#bsp-insert-code{
+    padding: 10px 20px;
+    color:#fff;
+    background:#0B0;
+    border:none;
+    text-align:center;
+    max-width:400px;
+    margin-top:8px;
+    &:hover{
+        background:#0C0;
+    }
+}
