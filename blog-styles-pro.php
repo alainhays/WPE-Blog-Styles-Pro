@@ -4,7 +4,7 @@
  * Plugin URI: https://wpexpanse.com/wpe-blog-styles-pro/
  * Description: WPE Blog Styles Pro is a very simple, yet powerful stylesheet manager. Give your blog a consistent, elegant, and proffesional design.
  * Author: WP Expanse
- * Version: 1.1.0
+ * Version: 1.1.1
  * Copyright 2017 WP Expanse - Contact us at https://wpexpanse.com
  *
  * @package WPE Blog Styles Pro
@@ -21,6 +21,14 @@ class WPEXPANSE_Blog_Styles_Pro {
 	 * @since 1.1.0
 	 */
 	static $plugin_data = null;
+
+	/**
+	 * Database Options
+	 * Private data - Settings stored in the database
+	 *
+	 * @since 1.1.1
+	 */
+	private $db_options = null;
 
 	/**
 	 * Backend admin functions
@@ -114,8 +122,23 @@ class WPEXPANSE_Blog_Styles_Pro {
 		);
 
 
+		// Load settings form the database
+		$db_get_options = get_option("wpe-bsp", "remove-auto-p-tags||1||default-template||default");
+		$db_get_options = explode("||", $wpe_bsp_data_local);
+		for ($i=0; $i < count($db_get_options); $i+=2) { 
+
+			$this->db_options[$db_get_options[$i]] = $db_get_options[$i+1];
+
+		}
+
+
 		// If WPE Core Dependencies not found then accuire them from GitHub
 		if ( !file_exists( self::$plugin_data['shared-dir'] . self::$plugin_data['shared-core'] ) ){
+
+			// Create Shared Folder if doesn't exists
+			if(!file_exists(self::$plugin_data['shared-dir'])){
+				mkdir(self::$plugin_data['shared-dir'], 744);
+			}
 			// Download
 			$zip_file = file_get_contents('https://github.com/wpexpanse/WPE-Core/archive/master.zip');
 			file_put_contents(self::$plugin_data['shared-dir']."/wpe-core.zip", $zip_file);
@@ -131,11 +154,13 @@ class WPEXPANSE_Blog_Styles_Pro {
 			} else { 
 				echo '<div style="padding:20px;font-size:20px"> Error core was not installed! Please reinstall or check the permissions of the plugins folder.</div>';
 			}
+
 		}
 
 
 		// Require Core Dependencies 
 		if(file_exists(self::$plugin_data['shared-dir'].self::$plugin_data['shared-core']."wpe-shared-helpers.php")){
+
 			// Core Library Includes
 			$shared_dependency = array(
 				WPEXPANSE_shared_helpers => "wpe-shared-helpers.php",
@@ -148,7 +173,9 @@ class WPEXPANSE_Blog_Styles_Pro {
 					require_once self::$plugin_data['shared-dir'] . self::$plugin_data['shared-core'] . $dep_path;
 				}
 			}
+
 		}
+
 		// BSP Classes & Class Extensions
 		require_once 'includes/wpe-bsp-admin-functions.php';
 		require_once 'includes/wpe-bsp-functions.php';
@@ -182,6 +209,52 @@ class WPEXPANSE_Blog_Styles_Pro {
 	}
 
 	/**
+	* Return options by name from database
+	*
+	*
+	* @since  1.1.1
+	* @return WPEXPANSE_Blog_Styles_Pro
+	*/
+	static public function get_data( $data_name ){
+		return esc_html($this->db_options[$data_name]);
+	}
+
+	/**
+	* Set options by name from database
+	*
+	*
+	* @since  1.1.1
+	* @return WPEXPANSE_Blog_Styles_Pro
+	*/
+	static public function set_data( $data_name, $value ){
+		$this->db_options[sanitize_text_field($data_name)] = sanitize_text_field($value);
+		$this->save_data();
+	}
+
+	/**
+	* Update the data in the database
+	*
+	*
+	* @since  1.1.1
+	* @return WPEXPANSE_Blog_Styles_Pro
+	*/
+	static private function save_data(){
+		
+		$db_set_options = null;
+		$count = 0;
+		foreach($this->db_options as $key => $value) { 
+
+			$db_set_options[$count] = $key;
+			$db_set_options[$count+1] = $value;
+			$count++;
+
+		}
+		implode("||", $db_set_options);
+		set_option("wpe-bsp", $db_set_options);
+
+	}
+
+	/**
 	* The plugin activation function 
 	*
 	*
@@ -207,50 +280,5 @@ class WPEXPANSE_Blog_Styles_Pro {
 
 // Initialize Blog Styles Pro
 WPEXPANSE_Blog_Styles_Pro::init();
-
-
-
-
-//add_action('admin_init', 'BSP_get_extra_definitions');
-
-
-
-
-/* Load settings form the database 
-global $wpe_bsp_data_options;
-$wpe_bsp_data_local = get_option("wpe-bsp", "remove-auto-p-tags:-@-:1");
-$wpe_bsp_data_local = explode(":-@-:", $wpe_bsp_data_local);
-for ($i=0; $i < count($wpe_bsp_data_local); $i+=2) { 
-	$wpe_bsp_data_options[$wpe_bsp_data_local[$i]] = $wpe_bsp_data_local[$i+1];
-}
-*/
-
-
-
-
-
-/* Setup LESS Compiler 
-if(!class_exists(Less_Parser)){
-	require_once(WPE_BLOG_STYLES_PRO_DIR .'admin/lib/lessphp/Less.php');
-}
-global $WPE_BSP_less;
-$WPE_BSP_less_options = array( 'compress'=>true );
-$WPE_BSP_less = new Less_Parser($WPE_BSP_less_options);
-
-
-/* Library version doesn't exists 
-if(!file_exists(self::$plugin_data['shared-dir'] . "version.txt")){
-		global $WPE_helpers;
-		mkdir(self::$plugin_data['shared-dir'], 0744, true);
-		/* Copy Library Updates over to the Shared Data 
-		$WPE_helpers->copy_recursive(self::$plugin_data['library-dir'], self::$plugin_data['shared-dir']);
-} else {
-	/* If Library versions don't match then update Shared Data 
-	if(file_get_contents(self::$plugin_data['shared-dir'] . "version.txt") != file_get_contents(self::$plugin_data['library-root'] . "version.txt")){
-		$WPE_helpers->copy_recursive(self::$plugin_data['library-dir'], self::$plugin_data['shared-dir']);
-	}
-}
-
-*/
 
 ?>
