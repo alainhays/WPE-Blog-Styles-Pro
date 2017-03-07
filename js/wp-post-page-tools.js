@@ -21,7 +21,7 @@
 		$("#bsp-insert-code").click(function(){
 
 			/* Get data from quick inserts menu */
-			var classes = cSelectBoxClasses.val().join(" ");
+			var classes = "BSP "+cSelectBoxClasses.val().join(" ");
 			var dirTags = cSelectBoxDirective.val().split("***");
 
 			if( $('#content').is(':visible') ) { /* Text editor */
@@ -54,6 +54,12 @@
 
 		}); 
 		
+		$('.BSP').hover(function(){
+			if(!$(this + " .bsp-edit-btn").length){
+			$(this).append("<div class='bsp-edit-btn'><i class='fa fa-pencil-square-o' aria-hidden='true'></i> </div>");
+			}
+		});
+
 	}
 	addAcitons();
 	});	  /* Document ready */

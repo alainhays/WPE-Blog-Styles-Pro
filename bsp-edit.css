@@ -1,0 +1,30 @@
+.BSP {
+  border: dotted 2px #DDD;
+}
+.BSP:hover {
+  border-color: #999;
+}
+.BSP .bsp-edit-btn {
+  background: #333;
+  color: #fff;
+  /* position:absolute; 
+        top:-30px;
+        right:0px; */
+  height: 30px;
+  width: 30px;
+}
+.mce-i-bsp-edit:before,
+.mce-i-bsp-remove:before {
+  position: relative;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  font-family: FontAwesome;
+  vertical-align: top;
+}
+.mce-i-bsp-edit:before {
+  content: "\f044";
+}
+.mce-i-bsp-remove:before {
+  content: "\f00d";
+}
