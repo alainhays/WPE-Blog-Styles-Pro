@@ -6,6 +6,14 @@
  */
 class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 
+	/**
+	 * Post Types available
+	 *
+	 * @var  An array of all the get_post_types()
+	 * @since 1.1.2
+	 */
+	private $post_types = NUll;
+
 	public function __construct(){
 		if( is_admin()){
 			// UI actions
@@ -66,7 +74,10 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		return $plugin_array;
 	}
 
-	// Add Menu 
+	/* Attach BSP dashboard to the admin menu or inside the dashboard if it exists
+	 *
+	 * @since 1.0.0
+	 */
 	public function init_admin_menu_item() {
 	if(!class_exists("WPEXPANSE_Dashboard")){
 		$icon_url = plugins_url('../images/icon.png', __FILE__);
@@ -76,7 +87,10 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 	}
 	}
 	
-	// Add Dashboard  
+	/* Renders the_ID() BSP admin page
+	 *
+	 * @since 1.0.0
+	 */  
 	public function init_admin_page() {
 		$this->print_header();
 		$this->load_template( WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-dir"].'templates/admin-area' );
@@ -98,16 +112,17 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		}
 	}
 
-	/* Init custom styles */
+		
+	/* Add custom styles to admin visual editor
+	 *
+	 * @since 1.0.0
+	 */  
 	public function posts_visual_editor_options() {
-		global $typenow;
 		// check user permissions
 		if ( !current_user_can('edit_posts') && !current_user_can('edit_pages') ) {
 			return;
 		}
-		// verify the post type
-		if( ! in_array( $typenow, array( 'post', 'page' ) ) )
-			return;
+		
 		// check if WYSIWYG is enabled
 		if ( get_user_option('rich_editing') == 'true') {
 			add_filter( 'mce_css', array($this, 'wpe_bsp_add_editor_styles' ) );
@@ -131,8 +146,8 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 
 	/* Add custom Interfaces in admin posts */
 	public function wpe_bsp_add_to_post_interface(){
-		$screens = array( 'post' );
-		foreach ( $screens as $screen ) {
+		$this->post_types = get_post_types(array('public'   => true), 'names');
+		foreach ( $this->post_types as $screen ) {
 			add_meta_box( 
 			'wpe-qi-box',
 			'Blog Styles Pro Quick Insert',

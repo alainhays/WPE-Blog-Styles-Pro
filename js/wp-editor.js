@@ -16,6 +16,8 @@ jQuery( document ).on( 'tinymce-editor-init', function( event, editor ) {
 
     addInlineEditorButtons($, event, editor );
 
+	//tinymce.forced_root_block = "";
+
     
 });
 	
@@ -36,32 +38,54 @@ var addInlineEditorButtons = function($, event, editor){
 	editor.addButton('bsp-remove', {
 		title: 'Remove BSP ELement',
 		classes: 'bsp-remove',
-		onclick: function(e){
+		onclick: function(event){
 			var node = editor.selection.getNode();
-			if(editor.dom.hasClass( node, 'BSP' ) ){
-                var thisSelection = editor.selection.getSel();
-                editor.dom.remove(node);
-                editor.selection.setContent(thisSelection.focusNode.textContent);
+			var elementList = editor.dom.getParents(node);
+	        for(var i = 0; i < elementList.length; i++){
+				if(editor.dom.hasClass(elementList[i], 'BSP' ) ){	
+					editor.selection.select(elementList[i]);
+					node = editor.selection.getNode();
+					// Grab Content and split off top most container
+					var thisContent = editor.selection.getContent({format: 'html'}).split(/>(.+)/)[1];
+					editor.selection.setContent(thisContent); 
+				}
 			}
+			/* Remove Button When finished */
+			this._parent._parent._parent.remove();
+			this._parent._parent.remove();
+			this.remove();
+			
 		}
 	});
 	
 	/* Creates a toolbar */
 	if (toolbar) {
 		editor.on('wptoolbar', function (event) {
-			if (editor.dom.hasClass(event.element, 'BSP')) {
-                 // TODO: Add the edit funcitonality 'bsp-edit',
-				event.toolbar = editor.wp._createToolbar(['bsp-remove']);
+			var elementList = event.parents;
+			//console.log(event.parents);
+	        for(var i = 0; i < elementList.length; i++){
+				//if (editor.dom.hasClass(elementList[i], 'BSP')) {
+				//	var thisElementsClasses = elementList[i];
+					
+				//if(thisElementsClasses.indexOf("BSP") > -1){
+				   if (editor.dom.hasClass(elementList[i], 'BSP')) {
+					//editor.selection.setNode(elementList[i]);
+					// TODO: Add the edit funcitonality 'bsp-edit',
+                    //console.log(elementList[i]);
+					event.element = elementList[i]; 
+					event.toolbar = editor.wp._createToolbar(['bsp-remove']);
+				 }
 			}
+
 		});
 	}
-    /* Refresh toolbar onChange */  
+    /* Refresh toolbar onChange  
     editor.on('change', function(event) {
         if (editor.dom.hasClass(event.element, 'BSP')) {
              // TODO: Add the edit funcitonality 'bsp-edit',
             event.toolbar = editor.wp._createToolbar(['bsp-remove']);
         }
-    }); 
+    });  */
 
 }
 

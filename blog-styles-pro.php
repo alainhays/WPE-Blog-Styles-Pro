@@ -4,7 +4,7 @@
  * Plugin URI: https://wpexpanse.com/wpe-blog-styles-pro/
  * Description: WPE Blog Styles Pro is a very simple, yet powerful stylesheet manager. Give your blog a consistent, elegant, and proffesional design.
  * Author: WP Expanse
- * Version: 1.1.1
+ * Version: 1.1.2
  * Copyright 2017 WP Expanse - Contact us at https://wpexpanse.com
  *
  * @package WPE Blog Styles Pro
@@ -16,8 +16,8 @@ class WPEXPANSE_Blog_Styles_Pro {
 
 	/**
 	 * All the plugin specific Data
-	 * Static data - Define all important magic strings
 	 *
+	 * @var Static data - Define all important magic strings
 	 * @since 1.1.0
 	 */
 	static $plugin_data = null;
@@ -196,7 +196,7 @@ class WPEXPANSE_Blog_Styles_Pro {
 		} else {
 			// If Library versions don't match then update Shared Data 
 			if(file_get_contents(self::$plugin_data['shared-bsp-dir'] . "version.txt") != file_get_contents(self::$plugin_data['library-root'] . "version.txt")){
-				self::$helpers->copy_recursive(self::$plugin_data['library-dir'], self::$plugin_data['shared-dir']);
+				self::$helpers->copy_recursive(self::$plugin_data['library-dir'], self::$plugin_data['shared-bsp-dir']);
 			}
 		}
 

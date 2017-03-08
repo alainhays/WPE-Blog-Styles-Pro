@@ -22,11 +22,13 @@ class WEXPANSE_BSP_Functions {
 	 * @since 1.0.0
 	 */
 	public function filter_empty_auto_tags($content){
+
 		global $wpe_bsp_data_options;
 	    if($wpe_bsp_data_options["remove-auto-p-tags"] > 0){
 			$content = str_replace(array("<p>", "</p>", "<br>"), "", $content);
 		}
-		return $content;
+		/* Add tags for BSP Styles */
+		return "<div id='BSP-init'>".$content."</div>";
 	} 
 
 }
