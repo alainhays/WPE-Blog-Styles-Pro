@@ -2,6 +2,11 @@
 
 class WEXPANSE_BSP_Admin_Functions {
 
+       /**
+        * Assign all admin AJAX action to the proper functions
+        *
+        * @since 1.0.0
+        */
     	public function __construct(){
 
 		if( is_admin()){
@@ -18,7 +23,11 @@ class WEXPANSE_BSP_Admin_Functions {
 
 	}
 
-    /* Load a Less file at a specific path */
+    /**
+    * load LESS file
+    *
+    * @since 1.0.0
+    */
     public function bsp_load_less_file() {	
 
             /* Prepare Data */
@@ -34,7 +43,11 @@ class WEXPANSE_BSP_Admin_Functions {
 
     }
 
-    /* Save data to a Less file at a specific path */
+    /**
+	 * Save less data to file
+	 *
+	 * @since 1.0.0
+	 */
     public function bsp_save_less_file() {	
             
             /* Prepare Data */
@@ -64,7 +77,7 @@ class WEXPANSE_BSP_Admin_Functions {
             $container_total = count($get_container_total);
             $get_final_styles = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("{", "}", $get_final_styles);
             $get_final_styles = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("/*", "*/", $get_final_styles);
-            $get_final_styles = str_replace(array(".type-post ", ",#tinymce.wp-editor"), "", $get_final_styles);
+            $get_final_styles = str_replace(array("#BSP-init ", ",#tinymce.wp-editor"), "", $get_final_styles);
             $get_final_styles = explode(".", $get_final_styles);
             $final_computed_classes = array();
             $entry = 0;
@@ -96,7 +109,11 @@ class WEXPANSE_BSP_Admin_Functions {
 
     }
 
-    /* List out Less files in a specific folder */
+    /**
+    * Get a List of LESS files in current theme
+    *
+    * @since 1.0.0
+    */
     public function bsp_load_less_workshop() {	
 
             /* load current selected file list */
@@ -140,7 +157,11 @@ class WEXPANSE_BSP_Admin_Functions {
 
     }
 
-    /* Popup Menu */
+    /**
+    * Popup a menu for folder managemenet
+    *
+    * @since 1.0.0
+    */
     public function bsp_popup(){
     
     if($_POST["reason"] == "create"){
@@ -190,7 +211,11 @@ class WEXPANSE_BSP_Admin_Functions {
         wp_die();
     }
 
-    /* Create a new BSP themefolder or file */
+    /**
+    * Task runner that modifies the BSP file & theme system
+    *
+    * @since 1.0.0
+    */
     public function bsp_run_file_action() {
 
             /* prepare data */

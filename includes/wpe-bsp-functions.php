@@ -1,5 +1,9 @@
 <?php
-/* Front-end actions & filters */
+/**
+ * Front-end actions & filters
+ *
+ * @since 1.0.0
+ */
 class WEXPANSE_BSP_Functions {
 
 	public function __construct(){

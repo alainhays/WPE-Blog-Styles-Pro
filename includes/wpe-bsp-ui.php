@@ -161,40 +161,11 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 
 	/* Custom side menu that handles inserting code for BSP */
 	public function wpe_bsp_quick_insert_menu( $post ) {
-			
+
 		$data = file_get_contents(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . "admin-config.json");
-		$data = json_decode($data, TRUE); 
-		$class_total = count($data);
-		?>
+		$data = json_decode($data, TRUE);
+		$pepared_data = array("data" => $data, "class_total" => count($data));
+		$this->load_template( WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-dir"].'templates/insert-menu', $pepared_data);
 
-		<div> Select one or more styles: </div>
-		<div style="padding-top:5px;">
-			<select id="wpe-bsp-select-classes" multiple="multiple">
-				<?php
-				for($i = 0; $i < $class_total; $i++){
-					echo '<option value="'.$data[$i].'">'.str_replace(array("-", "bsp"), " ", $data[$i]).'</option>';
-				}
-				?>
-			</select>
-		</div>
-		<div> Select a base HTML element: </div>
-		<div style="padding-top:5px;">
-			<select id="wpe-bsp-select-directive">
-			<option value="<div class=*xxx>***</div>" selected="selected">div - Basic block container </option>
-			<option value="<span class=*xxx>***</span>">span - Basic inline container </option>
-			<option value="<p class=*xxx>***</p>">p - Paragraph container </option>
-			<option value="class=*yyy">class - Wrapped in class attribute </option>
-			<option value="*zzz">INSERT STYLES ONLY</option>
-			<option value="<h1 class=*xxx>***</h1>">h1 - Header tag largest </option>
-			<option value="<h2 class=*xxx>***</h2>">h2 - Header tag larger </option>
-			<option value="<h3 class=*xxx>***</h3>">h3 - Header tag medium </option>
-			<option value="<h4 class=*xxx>***</h4>">h4 - Header tag small </option>
-			<option value="<h5 class=*xxx>***</h5>">h5 - Header tag smallest </option>
-			</select>
-		</div>
-		
-		<div id="bsp-insert-code"> Insert </div>
-
-		<?php
 	}
 }
