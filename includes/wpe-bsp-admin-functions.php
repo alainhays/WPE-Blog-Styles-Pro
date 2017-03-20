@@ -50,6 +50,9 @@ class WEXPANSE_BSP_Admin_Functions {
 	 */
     public function bsp_save_less_file() {	
             
+            /* Get access to DB */
+            global $WPE_BSP_DB;
+
             /* Prepare Data */
             if($_POST["data"]["mode"] == "advanced"){
                 $filename = WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . $_POST["data"]["path"];
@@ -58,18 +61,23 @@ class WEXPANSE_BSP_Admin_Functions {
                 $folderpath = WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . $folderpath[0]."/";
                 /* Save this File */
                 file_put_contents($filename, str_replace("\'", "'", str_replace('\"', '"', $_POST["data"]["content"])));
-                echo $name . " was saved & compiled!";
+                /* Save the current theme in database */
+                $WPE_BSP_DB->set_data("current-template", $folderpath[0]);
+                echo $name . " was saved & LESS compiled!";
             } else {
                 $folderpath = WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . $_POST["data"]["path"]."/";
-                echo "settings saved & compiled!";
-                /* TODO when I add options here then save them */
+                /* Save the current theme in database */
+                $WPE_BSP_DB->set_data("current-template", $_POST["data"]["path"]);
+                echo "settings saved & LESS compiled!";
             }
+
+            /* Save all options to DB */
+            $WPE_BSP_DB->save_data();
 
             /* Compile the less file and output a CSS file */
             WPEXPANSE_Blog_Styles_Pro::$less->parseFile($folderpath."style.less", $folderpath);
             $get_final_styles = WPEXPANSE_Blog_Styles_Pro::$less->getCss();
             file_put_contents(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . "style.css", $get_final_styles);
-
 
             /* Filter the css into usable data for workshop/admin-config.json which is used for post inserting */
             $get_container_total = explode("{", $get_final_styles);
@@ -114,10 +122,17 @@ class WEXPANSE_BSP_Admin_Functions {
     *
     * @since 1.0.0
     */
-    public function bsp_load_less_workshop() {	
+    public function bsp_load_less_workshop() {
+
+            /* Assign Default Template if post isset else used stored value */
+            global $WPE_BSP_DB;
+            if(strlen($_POST["dir"]) > 2){
+                $WPE_BSP_DB->set_data("current-template", $_POST["dir"]); 
+            }
+            $current_theme = $WPE_BSP_DB->get_data("current-template");
 
             /* load current selected file list */
-            $list = glob(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . $_POST["dir"]."/*.less");
+            $list = glob(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . $current_theme ."/*.less");
             foreach ($list as $filename) {
                 $file_path_final = explode("/", $filename);
                 $total = count($file_path_final);
@@ -141,7 +156,7 @@ class WEXPANSE_BSP_Admin_Functions {
                 ?>
                     <option value="<?php echo $file_name_final; ?>"
                     <?php  
-                    if($_POST["dir"] == $file_name_final){ echo "selected='selected'"; }
+                    if($current_theme == $file_name_final){ echo "selected='selected'"; }
                     ?> >
                         <?php echo $file_name_final; ?>
                     </option>      

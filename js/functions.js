@@ -14,26 +14,16 @@ jQuery( document ).ready(function($) {
     var dataTabs = {
         config : "" 
     };
-/*  editor.resize(true);
-    editor.scrollToLine(0, true, true, function () {});
-    editor.gotoLine(0, 0, true); */
-
 
     /* load Initial LESS File */
     var init = function(){
-    var startingDirectory = "default";
-    var startingFile = "config";
-    var path = startingDirectory+"/"+startingFile+".less";
-    $("#bsp-loading-container").show();
-    /* Load Advanced Options */
-  /*  $.post(ajaxurl, {action:'bsp_load_less_file', filename: path}, function(data) {
-        editor.getSession().setValue($.trim(data));
-        dataTabs["less-config"] = $.trim(data);
-        addTab(path, $.trim(data));
-}); */
+        var startingDirectory = "default";
+        var startingFile = "config";
+        var path = startingDirectory+"/"+startingFile+".less";
+        $("#bsp-loading-container").show();
         editor.getSession().setValue('');
         $(".just-added-now").removeClass("just-added-now");
-        LoadFolderStructure(startingDirectory, 'easy');
+        LoadFolderStructure('', 'easy');
     }
 
 

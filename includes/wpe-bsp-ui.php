@@ -21,7 +21,6 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 				'admin_menu' => "init_admin_menu_item", 
 				'admin_enqueue_scripts' => "bsp_admin_enqueue", 
 				'admin_head' => "posts_visual_editor_options", 
-				'wp_ajax_wpe_bsp_get_all_classes' => "wpe_bsp_get_all_classes", 
 				'add_meta_boxes' => "wpe_bsp_add_to_post_interface"
 				);
 			foreach ($UI_Actions as $hook => $function) { 
@@ -168,4 +167,5 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		$this->load_template( WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-dir"].'templates/insert-menu', $pepared_data);
 
 	}
+
 }
