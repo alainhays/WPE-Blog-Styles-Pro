@@ -13,6 +13,7 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 	 * @since 1.1.2
 	 */
 	private $post_types = NUll;
+    private $css_inline_key = "wpe-bsp-inline-css";
 
 	public function __construct(){
 		if( is_admin()){
@@ -21,7 +22,9 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 				'admin_menu' => "init_admin_menu_item", 
 				'admin_enqueue_scripts' => "bsp_admin_enqueue", 
 				'admin_head' => "posts_visual_editor_options", 
-				'add_meta_boxes' => "wpe_bsp_add_to_post_interface"
+				'add_meta_boxes' => "wpe_bsp_add_to_post_interface",
+				'add_meta_boxes' => "wpe_bsp_inline_post_interface",
+				'save_post' => "wpe_bsp_inline_post_box_save"
 				);
 			foreach ($UI_Actions as $hook => $function) { 
 				add_action($hook , array( $this, $function ) );
@@ -44,6 +47,12 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		wp_enqueue_script( 'BSP-admin-post-page-edit', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/wp-post-page-tools.js' );
 		wp_enqueue_style(  'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', '', false );
 		wp_enqueue_style(  'BSP-edit', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"] . 'bsp-edit.css', array('font-awesome'), false );
+		// Ace Code editor
+		wp_enqueue_script( 'ace-code-editor', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js' );
+		wp_enqueue_script( 'ace-code-editor-mode-less', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/mode-less.js' );
+		wp_enqueue_script( 'ace-code-editor-mode-css', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/mode-css.js' );
+		wp_enqueue_script( 'ace-code-editor-bsp-theme', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/theme-custom.js' );
+		wp_enqueue_script( 'ace-code-editor-autocomplete', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js' );
 		 // If its not the main post page then exit now
 		if ( 'toplevel_page_blog-styles-pro-menu' != $hook && 'wpe-dashboard_page_blog-styles-pro-menu' != $hook ) {
 			return;
@@ -54,11 +63,7 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		wp_enqueue_style(  'toastr-style', "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css", '', false );
 		wp_enqueue_script( 'BSP-admin-config', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/config.js' );
 		wp_enqueue_script( 'BSP-admin-script', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/functions.js', array('jquery', 'toastr', 'media-upload'));
-		// Ace Code editor
-		wp_enqueue_script( 'ace-code-editor', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js' );
-		wp_enqueue_script( 'ace-code-editor-mode-less', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/mode-less.js' );
-		wp_enqueue_script( 'ace-code-editor-bsp-theme', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/theme-custom.js' );
-		wp_enqueue_script( 'ace-code-editor-autocomplete', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js' );
+
 
 	}
 
@@ -86,7 +91,8 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 	}
 	}
 	
-	/* Renders the_ID() BSP admin page
+	/**
+	 * Renders the_ID() BSP admin page
 	 *
 	 * @since 1.0.0
 	 */  
@@ -112,7 +118,8 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 	}
 
 		
-	/* Add custom styles to admin visual editor
+	/**
+	 * Add custom styles to admin visual editor
 	 *
 	 * @since 1.0.0
 	 */  
@@ -130,8 +137,10 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 	}
 
 	/**
-	* Registers the stylesheet with the visual editor
-	*/
+	 * Registers the stylesheet with the visual editor
+ 	 *
+	 * @since 1.0.0
+	 */  
 	public function wpe_bsp_add_editor_styles( $mce_css ) {
 
 		if ( ! empty( $mce_css ) ) {
@@ -139,11 +148,15 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		}
 		$mce_css .= WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-root"] . 'style.css, ' ;
 		$mce_css .= WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"] . 'bsp-edit.css' ;
-
+		//TODO Create a seperate file with inline styles to be displayed inside the visual editor
 		return $mce_css;
 	}
 
-	/* Add custom Interfaces in admin posts */
+   /**
+    * Add custom Interfaces in admin posts
+	*
+	* @since 1.1.4
+	*/
 	public function wpe_bsp_add_to_post_interface(){
 		$this->post_types = get_post_types(array('public'   => true), 'names');
 		foreach ( $this->post_types as $screen ) {
@@ -158,7 +171,11 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		}
 	}
 
-	/* Custom side menu that handles inserting code for BSP */
+	/**
+	 * Custom side menu that handles inserting code for BSP 
+	 *
+	 * @since 1.1.4
+	 */
 	public function wpe_bsp_quick_insert_menu( $post ) {
 
 		$data = file_get_contents(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . "admin-config.json");
@@ -167,5 +184,107 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		$this->load_template( WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-dir"].'templates/insert-menu', $pepared_data);
 
 	}
+
+   /**
+    * Add inline style meta box to all post types
+	*
+	* @since 1.1.4
+	*/
+	public function wpe_bsp_inline_post_interface(){
+		$this->post_types = get_post_types(array('public'   => true), 'names');
+		foreach ( $this->post_types as $screen ) {
+			add_meta_box( 
+			'wpe-bsp-inline-box',
+			'BSP Inline Script & Styles',
+			array($this, 'wpe_bsp_inline_post_box'),
+			$screen,
+			'advanced',
+			'high'
+			);
+		}
+	}
+
+	/**
+	 * Add UI layout to the inline style meta box
+	 *
+	 * @since 1.1.4
+	 */
+	public function wpe_bsp_inline_post_box( $post ) {
+	?>
+		<p>Add CSS styles inline for this specific page.</p>
+		<p>
+		<div class="css-horizontal">
+		<div id="bsp-css-inline" style="width: 98%;height:300px;border: 1px solid #111;font-size: 16px;font-weight: 400;"> </div>		
+		<textarea id="<?php echo $this->css_inline_key; ?>" name="<?php echo $this->css_inline_key; ?>" hidden="hidden"><?php
+		 echo stripslashes( get_post_meta( get_the_ID(), $this->css_inline_key, true ) ); 
+		 ?></textarea>
+		</div>
+		<br>
+		</p>
+	<script>
+	jQuery( document ).ready(function($) {
+	
+		ace.require("ace/ext/language_tools");
+		var editor = ace.edit("bsp-css-inline");
+		editor.setTheme("ace/theme/custom");
+		editor.setOptions({
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: true
+		});
+		editor.getSession().setMode("ace/mode/less");
+		var dataTabs = {
+			config : "" 
+		};
+		var textArea = '#<?php echo $this->css_inline_key; ?>';
+		editor.getSession().setValue($(textArea).text());
+		editor.on('change', function() {
+			$(textArea).text(editor.getSession().getValue());
+   		 });
+	});
+	</script>
+	<?php
+	}
+
+	/**
+	 * Get current key for inline styles
+	 *
+	 * @since 1.1.4
+	 */
+	public function get_css_inline_key(){
+		return $this->css_inline_key;
+	}
+
+	/**
+	 * Save the inline style meta box for post
+	 *
+	 * @since 1.1.4
+	 */
+	public function wpe_bsp_inline_post_box_save(){
+		// Even though we disabled it, check for autosave
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
+		return;
+		// Setup data
+		$post_id = get_the_ID();
+		// Check if post exists
+		if ( ! isset( $post_id ) )
+		return;
+		// Check for user permissions
+		if ( ! current_user_can( 'edit_post', $post_id ) )
+		return;
+		// Assign a value from metabox
+		if ( isset( $_POST[$this->css_inline_key] ) ) {
+			$final_value = stripslashes( $_POST[$this->css_inline_key] ) ;
+		} else {
+			$final_value = "";	
+		}
+		// Save or delete weather empty or not
+		if ( empty($final_value) ) {
+			delete_post_meta($post_id, $this->css_inline_key);
+		} else {
+			update_post_meta($post_id, $this->css_inline_key, $final_value);
+		}
+	}
+
 
 }

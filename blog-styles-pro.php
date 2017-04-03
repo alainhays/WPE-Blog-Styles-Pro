@@ -4,7 +4,7 @@
  * Plugin URI: https://wpexpanse.com/wpe-blog-styles-pro/
  * Description: WPE Blog Styles Pro is a very simple, yet powerful stylesheet manager. Give your blog a consistent, elegant, and proffesional design.
  * Author: WP Expanse
- * Version: 1.1.3
+ * Version: 1.1.4
  * Copyright 2017 WP Expanse - Contact us at https://wpexpanse.com
  *
  * @package WPE Blog Styles Pro

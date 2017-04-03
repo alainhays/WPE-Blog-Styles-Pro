@@ -34,6 +34,7 @@ class WEXPANSE_BSP_Admin_Init {
                     mkdir(WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-dir'], 744);
                 }
                 // Download
+                //TODO look into using API -> https://api.github.com/repos/wpexpanse/WPE-Core/master
                 $zip_file = file_get_contents('https://github.com/wpexpanse/WPE-Core/archive/master.zip');
                 file_put_contents(WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-dir']."/wpe-core.zip", $zip_file);
                 // Unzip

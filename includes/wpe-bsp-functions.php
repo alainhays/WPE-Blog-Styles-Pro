@@ -31,8 +31,11 @@ class WEXPANSE_BSP_Functions {
 	    if($wpe_bsp_data_options["remove-auto-p-tags"] > 0){
 			$content = str_replace(array("<p>", "</p>", "<br>"), "", $content);
 		}
+
+		$custom_inline = stripslashes( get_post_meta( get_the_ID(), WPEXPANSE_Blog_Styles_Pro::$ui->get_css_inline_key(), true ) );
+
 		/* Add tags for BSP Styles */
-		return "<div id='BSP-init'>".$content."</div>";
+		return "<style>".$custom_inline."</style><div id='BSP-init'>".$content."</div>";
 	} 
 
 }
