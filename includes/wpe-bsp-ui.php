@@ -21,9 +21,8 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 			$UI_Actions = array(
 				'admin_menu' => "init_admin_menu_item", 
 				'admin_enqueue_scripts' => "bsp_admin_enqueue", 
-				'admin_head' => "posts_visual_editor_options", 
-				'add_meta_boxes' => "wpe_bsp_add_to_post_interface",
-				'add_meta_boxes' => "wpe_bsp_inline_post_interface",
+				'admin_head' => "posts_visual_editor_options",
+				'add_meta_boxes' => "wpe_bsp_post_interface",
 				'save_post' => "wpe_bsp_inline_post_box_save"
 				);
 			foreach ($UI_Actions as $hook => $function) { 
@@ -63,7 +62,6 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		wp_enqueue_style(  'toastr-style', "https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css", '', false );
 		wp_enqueue_script( 'BSP-admin-config', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/config.js' );
 		wp_enqueue_script( 'BSP-admin-script', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/functions.js', array('jquery', 'toastr', 'media-upload'));
-
 
 	}
 
@@ -152,25 +150,6 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		return $mce_css;
 	}
 
-   /**
-    * Add custom Interfaces in admin posts
-	*
-	* @since 1.1.4
-	*/
-	public function wpe_bsp_add_to_post_interface(){
-		$this->post_types = get_post_types(array('public'   => true), 'names');
-		foreach ( $this->post_types as $screen ) {
-			add_meta_box( 
-			'wpe-qi-box',
-			'Blog Styles Pro Quick Insert',
-			array($this, 'wpe_bsp_quick_insert_menu'),
-			$screen,
-			'side',
-			'high'
-			);
-		}
-	}
-
 	/**
 	 * Custom side menu that handles inserting code for BSP 
 	 *
@@ -186,11 +165,11 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 	}
 
    /**
-    * Add inline style meta box to all post types
+    * Add inline styles and QI meta box to all post types
 	*
 	* @since 1.1.4
 	*/
-	public function wpe_bsp_inline_post_interface(){
+	public function wpe_bsp_post_interface(){
 		$this->post_types = get_post_types(array('public'   => true), 'names');
 		foreach ( $this->post_types as $screen ) {
 			add_meta_box( 
@@ -199,6 +178,14 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 			array($this, 'wpe_bsp_inline_post_box'),
 			$screen,
 			'advanced',
+			'high'
+			);
+			add_meta_box( 
+			'wpe-bsp-qi-box',
+			'Blog Styles Pro Quick Insert',
+			array($this, 'wpe_bsp_quick_insert_menu'),
+			$screen,
+			'side',
 			'high'
 			);
 		}
