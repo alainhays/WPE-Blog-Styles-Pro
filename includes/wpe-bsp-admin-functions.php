@@ -85,7 +85,7 @@ class WEXPANSE_BSP_Admin_Functions {
             $container_total = count($get_container_total);
             $get_final_styles = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("{", "}", $get_final_styles);
             $get_final_styles = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("/*", "*/", $get_final_styles);
-            $get_final_styles = str_replace(array("#BSP-init ", ",#tinymce.wp-editor"), "", $get_final_styles);
+            $get_final_styles = str_replace(array("#BSP-init", ",", " ", "#tinymce.wp-editor"), "", $get_final_styles);
             $get_final_styles = explode(".", $get_final_styles);
             $final_computed_classes = array();
             $entry = 0;
