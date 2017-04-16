@@ -103,7 +103,7 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		$as_json = defined( 'DOING_AJAX' ) && DOING_AJAX;
 		if ( $as_json ) { ob_start(); }
 		
-			if(file_exists(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-dir"].WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-core"]."wpe-shared-ui.php")){
+			if(file_exists(WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-dir"].WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-core"]."wpe-shared-ui.php")){
 				$this->wpexpanse_master_header(WPEXPANSE_Blog_Styles_Pro::$plugin_data);
 			} else {
 				$this->load_template( WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-dir"].'templates/no-header' );

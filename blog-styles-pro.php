@@ -102,7 +102,7 @@ class WPEXPANSE_Blog_Styles_Pro {
 		self::$plugin_data = array(
 		"name"            => "WPE Blog Styles Pro",
 		"slug"            => "blog-styles-pro-menu",
-		"version"         => "1.0.1",
+		"version"         => "1.1.4",
 		"author"          => "WP Expanse",
 		"description"     => "WPE Blog Styles Pro is a very simple, yet powerful stylesheet manager. Give your blog a consistent, elegant, and proffesional design.",
 		"logo"            => plugins_url( 'images/logo.png', __FILE__ ),

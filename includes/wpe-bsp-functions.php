@@ -27,8 +27,8 @@ class WEXPANSE_BSP_Functions {
 	 */
 	public function filter_empty_auto_tags($content){
 
-		global $wpe_bsp_data_options;
-	    if($wpe_bsp_data_options["remove-auto-p-tags"] > 0){
+		global $WPE_BSP_DB;
+	    if($WPE_BSP_DB->get_data("remove-auto-p-tags")){
 			$content = str_replace(array("<p>", "</p>", "<br>"), "", $content);
 		}
 

@@ -58,11 +58,12 @@ class WEXPANSE_BSP_Admin_Functions {
                 $filename = WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . $_POST["data"]["path"];
                 $folderpath = explode("/", $_POST["data"]["path"]);
                 $name = $folderpath[1];
+                $folder = $folderpath[0];
                 $folderpath = WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . $folderpath[0]."/";
                 /* Save this File */
                 file_put_contents($filename, str_replace("\'", "'", str_replace('\"', '"', $_POST["data"]["content"])));
                 /* Save the current theme in database */
-                $WPE_BSP_DB->set_data("current-template", $folderpath[0]);
+                $WPE_BSP_DB->set_data("current-template", $folder);
                 echo $name . " was saved & LESS compiled!";
             } else {
                 $folderpath = WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . $_POST["data"]["path"]."/";

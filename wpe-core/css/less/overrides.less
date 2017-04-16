@@ -1,0 +1,38 @@
+// main: style.less
+// WordPress Overrides
+#wpfooter, .update-nag, .updated.fade, .notice {
+  display: none !important;
+}
+// Toastr Overrides >> Custom WPE Styles
+#toast-container > div {
+opacity:1 !important;
+box-shadow:3px 3px 2px rgba(0,0,0,.1) !important;	
+}
+.toast-bottom-right{
+    bottom:60px !important;
+}
+.toast {
+  background-color: #fff;
+  border-left: 6px solid #CCC;
+  color:#000 !important;
+  font-weight:bold;
+}
+.toast-success {
+  background-color: #fff;
+  border-left: 6px solid #00CC00;
+}
+.toast-error {
+  background-color: #fff;
+  border-left: 6px solid #bd362f;
+}
+.toast-info {
+  background-color: #fff;
+  border-left: 6px solid #2f96b4;
+}
+.toast-warning {
+  background-color: #fff;
+  border-left: 6px solid #f89406;
+}
+#toast-container > div {
+border-bottom: 2px solid rgba(0,0,0,.3);    
+}

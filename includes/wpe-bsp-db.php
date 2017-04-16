@@ -60,7 +60,9 @@ class WEXPANSE_BSP_DB {
         * @since 1.1.3
         */
         public function save_data(){
-
+            if(!is_admin()){
+                return 0;
+            }
             $new_db_string = "";
             foreach ($this->db_options as $key => $value){
                 $new_db_string .= $key.self::$delimiter.$value.self::$delimiter; 

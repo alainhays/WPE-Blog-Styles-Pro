@@ -26,7 +26,8 @@ class WEXPANSE_BSP_Admin_Init {
         * @since 1.0.0
         */
     	public function init_wpe_core(){
-            // If WPE Core Dependencies not found then accuire them from GitHub
+            //TODO Reintergrate this in eventually
+            /* If WPE Core Dependencies not found then accuire them from GitHub
             if ( !file_exists( WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-dir'] . WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-core'] ) ){
 
                 // Create Shared Folder if doesn't exists
@@ -50,25 +51,25 @@ class WEXPANSE_BSP_Admin_Init {
                     echo '<div style="padding:20px;font-size:20px"> Error core was not installed! Please reinstall or check the permissions of the plugins folder.</div>';
                 }
 
-            }
+            } */
 
             // Require Core Dependencies 
-            if(file_exists(WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-dir'].WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-core']."wpe-shared-helpers.php")){
+         //   if(file_exists(WPEXPANSE_Blog_Styles_Pro::$plugin_data['this-dir'].WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-core']."wpe-shared-helpers.php")){
 
                 // Core Library Includes
                 $shared_dependency = array(
-                    WPEXPANSE_shared_helpers => "wpe-shared-helpers.php",
-                    WPEXPANSE_BSP_ui => "wpe-shared-ui.php",
-                    Less_Parser => "3pl/lessphp/Less.php"		
+                    'WPEXPANSE_shared_helpers' => "wpe-shared-helpers.php",
+                    'WPEXPANSE_BSP_ui' => "wpe-shared-ui.php",
+                    'Less_Parser' => "3pl/lessphp/Less.php"		
                 );
                 // Be sure to check to make sure they don't already exist
                 foreach ($shared_dependency as $dep_class => $dep_path) {
                     if(!class_exists($dep_class)){
-                        require_once WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-dir'] . WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-core'] . $dep_path;
+                        require_once WPEXPANSE_Blog_Styles_Pro::$plugin_data['this-dir'] . WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-core'] . $dep_path;
                     }
                 }
 
-            }
+           // }
         }
 
 }
