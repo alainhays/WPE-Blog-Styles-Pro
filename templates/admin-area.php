@@ -27,6 +27,14 @@
 <div id="wpe-bsp-main">
 <div id="tab-container"></div>
 <div id="BSP-main-editor"></div>
+<div id="wpe-bsp-quick-Help" style="padding:20px;">
+    <h3> Reference Guide to BSP Conventions </h3>
+    <ul>
+        <li>Wrap your classes like this ("<b>.bsp-</b>"example-class-name"<b>-bsp</b>") to add the class to quick insert for any post type.</li>
+        <li>The main wrapper must have "<b>#BSP-init</b>" to render on post pages.</li>
+        <li> Including "<b>#tinymce.wp-editor</b>" with the main wrapper class will allow your styles to render in the visual tab. (Tiny-Mce) </li>
+    </ul>
+     </div>
 </div>
 <div id="list-container">
 </div>

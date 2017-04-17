@@ -81,34 +81,33 @@ class WEXPANSE_BSP_Admin_Functions {
             file_put_contents(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . "style.css", $get_final_styles);
 
             /* Filter the css into usable data for workshop/admin-config.json which is used for post inserting */
-            $get_container_total = explode("{", $get_final_styles);
-            $get_container_total = explode(",", $get_container_total[0]);
-            $container_total = count($get_container_total);
-            $get_final_styles = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("{", "}", $get_final_styles);
-            $get_final_styles = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("/*", "*/", $get_final_styles);
-            $get_final_styles = str_replace(array("#BSP-init", ",", " ", "#tinymce.wp-editor"), "", $get_final_styles);
-            $get_final_styles = explode(".", $get_final_styles);
-            $final_computed_classes = array();
-            $entry = 0;
-            $total = count($get_final_styles);
-            for ($i=0; $i < $total; $i++) { 
-                if (strpos($get_final_styles[$i],'bsp-') !== false) {
-                        $final_computed_classes[$entry] = trim($get_final_styles[$i]);
-                        $entry ++;  
-                }
+           /* $get_container_total = explode(".bsp-", $get_final_styles);
+            $get_container_total = explode(",", $get_container_total[0]); */
+            // $container_total = count($get_container_total);
+
+            /* Break up BSP with explosion jutsu */
+            $get_styles_breakdown = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("{", "}", $get_final_styles);
+            $get_styles_breakdown = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("/*", "*/", $get_styles_breakdown);
+            $get_styles_breakdown = str_replace(array("#BSP-init", "," , " ", "#tinymce.wp-editor", "tinymce", "BSP-init"), "", $get_styles_breakdown);
+            $get_styles_breakdown = explode(".bsp-", $get_styles_breakdown);
+            array_shift($get_styles_breakdown);
+            $get_final_styles = array();
+            for($i = 0; $i < count($get_styles_breakdown); $i++){
+                $temp = explode("-bsp", $get_styles_breakdown[$i]);
+                $get_final_styles[$i] = "bsp-" . $temp[0] . "-bsp"; 
             }
-            $final_computed_classes = array_unique($final_computed_classes);
-            $total = count($final_computed_classes)*$container_total;
+
+            $final_computed_classes = array_unique($get_final_styles);
+            $total = count($final_computed_classes);
             $admin_config = "[";
             for ($i=0; $i < $total*2; $i++) { 
                 if(strlen($final_computed_classes[$i]) > 3){
                     $admin_config .='"'. $final_computed_classes[$i].'"';
-                    if($i != ($total-$container_total)){
                     $admin_config .= ", ";
-                    }
                 }
             }
             $admin_config .= "]";
+            $admin_config = str_replace(", ]", "]", $admin_config); // remove trailing comma
             file_put_contents(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . "admin-config.json", $admin_config);
 
             /* Should trigger a cache purge */
