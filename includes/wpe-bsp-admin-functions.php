@@ -80,11 +80,6 @@ class WEXPANSE_BSP_Admin_Functions {
             $get_final_styles = WPEXPANSE_Blog_Styles_Pro::$less->getCss();
             file_put_contents(WPEXPANSE_Blog_Styles_Pro::$plugin_data["shared-bsp-dir"] . "style.css", $get_final_styles);
 
-            /* Filter the css into usable data for workshop/admin-config.json which is used for post inserting */
-           /* $get_container_total = explode(".bsp-", $get_final_styles);
-            $get_container_total = explode(",", $get_container_total[0]); */
-            // $container_total = count($get_container_total);
-
             /* Break up BSP with explosion jutsu */
             $get_styles_breakdown = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("{", "}", $get_final_styles);
             $get_styles_breakdown = WPEXPANSE_Blog_Styles_Pro::$helpers->filter_out_everything_between_these_tags("/*", "*/", $get_styles_breakdown);
@@ -97,6 +92,7 @@ class WEXPANSE_BSP_Admin_Functions {
                 $get_final_styles[$i] = "bsp-" . $temp[0] . "-bsp"; 
             }
 
+            /* Make Unique and print out in json file */
             $final_computed_classes = array_unique($get_final_styles);
             $total = count($final_computed_classes);
             $admin_config = "[";

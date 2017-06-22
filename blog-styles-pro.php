@@ -127,7 +127,7 @@ class WPEXPANSE_Blog_Styles_Pro {
 		self::$admin_init = new WEXPANSE_BSP_Admin_Init();
 
 		/* Initiate WPE CORE */
-        self::$admin_init::init_wpe_core();
+        self::$admin_init->init_wpe_core();
 
 		// BSP Core Classes & Class Extensions
 		require_once 'includes/wpe-bsp-admin-functions.php';

@@ -4,7 +4,7 @@
  *
  * @package WPEXPANSE Core
  */
-if(!class_exists('WPEXPANSE_Shared_Helpers')){
+if(!class_exists('WPEXPANSE_Shared_Helpers', false)){
     class WPEXPANSE_Shared_Helpers {
         
         public function __construct() {

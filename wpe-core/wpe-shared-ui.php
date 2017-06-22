@@ -4,7 +4,7 @@
  *
  * @package WPEXPANSE Core
  */
-if(!class_exists('WPEXPANSE_Shared_UI')){
+if(!class_exists('WPEXPANSE_Shared_UI', false)){
     class WPEXPANSE_Shared_UI {
 
         public function __construct(){

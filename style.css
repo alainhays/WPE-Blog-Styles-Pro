@@ -332,16 +332,17 @@
   color: #fff;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.4);
 }
-.bsp-popup-cover .bsp-popup-main .bsp-popup-body .select2-container--default {
+.bsp-popup-cover .bsp-popup-main .bsp-popup-body .select22-container--default {
   width: 100% !important;
   min-width: 300px;
 }
 /* POST - Page insert section */
-.select2-container,
-#wpe-bsp-select-classes {
+.select22-container,
+#wpe-bsp-select-classes,
+#s2id_wpe-bsp-select-classes {
   width: 100% !important;
 }
-.select2-selection__rendered .select2-selection__choice {
+.select22-selection__rendered .select22-selection__choice {
   background-color: #f1f1f1;
   border: 0px !important;
   border-radius: 0px !important;

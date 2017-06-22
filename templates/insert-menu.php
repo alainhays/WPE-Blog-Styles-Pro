@@ -8,7 +8,7 @@
  * @package WPEXPANSE_Blog_Styles_Pro
  */
 ?>
-
+<div>
 <div> Select one or more styles: </div>
 <div style="padding-top:5px;">
     <select id="wpe-bsp-select-classes" multiple="multiple">
@@ -36,3 +36,4 @@
 </div>
 
 <div id="bsp-insert-code"> Insert </div>
+</div>

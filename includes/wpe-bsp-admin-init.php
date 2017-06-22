@@ -2,6 +2,9 @@
 
 class WEXPANSE_BSP_Admin_Init {
 
+        public function __construct() {
+
+        }
        /**
         * If BSP theme Library out of date or doesn't exist then create it
         *
@@ -58,13 +61,13 @@ class WEXPANSE_BSP_Admin_Init {
 
                 // Core Library Includes
                 $shared_dependency = array(
-                    'WPEXPANSE_shared_helpers' => "wpe-shared-helpers.php",
-                    'WPEXPANSE_BSP_ui' => "wpe-shared-ui.php",
+                    'WPEXPANSE_Shared_Helpers' => "wpe-shared-helpers.php",
+                    'WPEXPANSE_Shared_UI' => "wpe-shared-ui.php",
                     'Less_Parser' => "3pl/lessphp/Less.php"		
                 );
                 // Be sure to check to make sure they don't already exist
                 foreach ($shared_dependency as $dep_class => $dep_path) {
-                    if(!class_exists($dep_class)){
+                    if(!class_exists($dep_class, false)){
                         require_once WPEXPANSE_Blog_Styles_Pro::$plugin_data['this-dir'] . WPEXPANSE_Blog_Styles_Pro::$plugin_data['shared-core'] . $dep_path;
                     }
                 }

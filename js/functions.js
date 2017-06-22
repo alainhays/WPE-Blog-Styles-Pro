@@ -23,7 +23,7 @@ jQuery( document ).ready(function($) {
         $("#bsp-loading-container").show();
         editor.getSession().setValue('');
         $(".just-added-now").removeClass("just-added-now");
-        LoadFolderStructure('', 'easy');
+        LoadFolderStructure('', 'advanced');
     }
 
 

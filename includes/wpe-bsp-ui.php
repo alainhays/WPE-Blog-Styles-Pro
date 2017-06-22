@@ -26,7 +26,7 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 				'save_post' => "wpe_bsp_inline_post_box_save"
 				);
 			foreach ($UI_Actions as $hook => $function) { 
-				add_action($hook , array( $this, $function ) );
+				add_action($hook , array( $this, $function ));
 			}
 		}
 	}
@@ -41,9 +41,9 @@ class WPEXPANSE_BSP_UI extends WPEXPANSE_Shared_UI {
 		// load in entire admin area 
 		wp_enqueue_style(  'BSP-admin-styles', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'style.css', '', false );
 		// Select 2 boxes 
-		wp_enqueue_style( 'select-2-styles', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css', '', false );
-		wp_enqueue_script( 'select-2-script', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js' );
-		wp_enqueue_script( 'BSP-admin-post-page-edit', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/wp-post-page-tools.js' );
+		wp_enqueue_style( 'select-22-styles', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'css/select2-custom.min.css', '', false );
+		wp_enqueue_script( 'select-22-script', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/select2-custom.min.js' );
+		wp_enqueue_script( 'BSP-admin-post-page-edit', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"].'js/wp-post-page-tools.js', "", true );
 		wp_enqueue_style(  'font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css', '', false );
 		wp_enqueue_style(  'BSP-edit', WPEXPANSE_Blog_Styles_Pro::$plugin_data["this-root"] . 'bsp-edit.css', array('font-awesome'), false );
 		// Ace Code editor

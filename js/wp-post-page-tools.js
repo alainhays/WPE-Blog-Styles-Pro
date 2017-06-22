@@ -12,9 +12,10 @@
 		$.post(ajaxurl, { action : 'wpe_bsp_get_all_classes'}, function(data) {
 			/* Init Slecet 2 Box */
 			cSelectBoxClasses = $("#wpe-bsp-select-classes");
-			cSelectBoxClasses.select2();
 			cSelectBoxDirective = $("#wpe-bsp-select-directive");
-			cSelectBoxDirective.select2();
+			cSelectBoxClasses.select22();
+			cSelectBoxDirective.select22();
+			
 		}); // Ajax  
 
 		/* Create style of File */
@@ -61,5 +62,8 @@
 		});
 
 	}
+
 	addAcitons();
+
+
 	});	  /* Document ready */

@@ -1,6 +1,6 @@
 <?php
 
-if(!class_exists('Less_Parser')){
+if(!class_exists('Less_Parser', false)){
 
 	require_once( dirname(__FILE__).'/Cache.php');
 
